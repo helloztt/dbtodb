@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,14 +47,27 @@ public class HbmSpecification {
      * demo flat
      */
     @Column(name = "Spec_Show_Type")
-    private String specShowType;
+    private String specShowType = "flat";
 
     /**
      * 显示方式(图片|文字)
      * demo   image text
      */
     @Column(name = "Spec_Type")
-    private String specType;
+    private String specType = "text";
+    /**
+     *
+     */
+    @Column(name = "Spec_Memo")
+    private String specMemo = "";
+
+    @Column(name = "Supplier_Spec_Id")
+    private int supplierSpecId = 0;
+
+    @Column(name = "Supplier_Id")
+    private int supplierId = 0;
+
+    private Date lastmodify;
 
     /**
      * 标准规格Id
@@ -65,7 +79,7 @@ public class HbmSpecification {
      * 商户Id
      */
     @Column(name = "Customer_Id")
-    private int customerId;
+    private int customerId = -1;
 
     /**
      * 规格值List

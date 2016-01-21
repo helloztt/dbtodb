@@ -3,10 +3,7 @@ package com.huotu.hotsupplier.type.entity.mysql;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by admin on 2016/1/21.
@@ -21,7 +18,9 @@ public class PropertyValue {
     private Long id;
     private String name;
     private String nameAlias;
-    private Long propertyId;
     private int sortOrder;
     private String status;
+    @ManyToOne
+    @JoinColumn(name = "propertyId")
+    private Property property;
 }

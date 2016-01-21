@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.huotu.hotsupplier.type.service")
 @EnableJpaRepositories(
-        basePackages = "type.service",
+        basePackages = "com.huotu.hotsupplier.type.repository",
         entityManagerFactoryRef = "sqlEntityManagerFactory",
         transactionManagerRef = "sqlTransactionManager"
 )

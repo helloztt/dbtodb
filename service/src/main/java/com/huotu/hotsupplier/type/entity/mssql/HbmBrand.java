@@ -40,6 +40,28 @@ public class HbmBrand {
     @Column(name = "Brand_Name")
     private String brandName;
     /**
+     * 品牌URL
+     */
+    @Column(name = "Brand_Url")
+    private String brandUrl = "";
+    /**
+     * 品牌描述
+     */
+    @Column(name = "Brand_Desc")
+    private String brandDesc = "";
+    /**
+     * 品牌LOGO
+     */
+    @Column(name = "Brand_Logo")
+    private String brandLogo = "";
+    /**
+     *
+     */
+    @Column(name = "Brand_Keywords")
+    private String brandKeywords = "";
+
+    private boolean disabled = false;
+    /**
      * 分销商编号
      */
     @Column(name = "Customer_Id")
@@ -52,5 +74,5 @@ public class HbmBrand {
     /**
      * 排序
      */
-    private int orderNum;
+    private int orderNum = 0;
 }

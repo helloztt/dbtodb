@@ -11,10 +11,12 @@ import com.huotu.hotsupplier.type.repository.HbmSpecificationRepository;
 import com.huotu.hotsupplier.type.service.HbmGoodsTypeService;
 import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by admin on 2016/1/21.
  */
+@Service
 public class HbmGoodsTypeServiceImpl implements HbmGoodsTypeService {
     @Autowired
     private HbmGoodsTypeRepository typeRepository;

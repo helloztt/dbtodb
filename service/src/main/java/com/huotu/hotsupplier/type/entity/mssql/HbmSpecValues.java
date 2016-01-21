@@ -41,7 +41,7 @@ public class HbmSpecValues {
      * 规格图片
      */
     @Column(name = "Spec_Image")
-    private String image;
+    private String image = "";
 
     /**
      * 排序字段
@@ -53,7 +53,13 @@ public class HbmSpecValues {
      * 商户Id
      */
     @Column(name = "SV_Customer_Id")
-    private int customerId;
+    private int customerId = -1;
+
+    @Column(name = "Supplier_Id")
+    private int supplierId = 0;
+
+    @Column(name = "Supplier_Spec_Value_Id")
+    private int supplierSpecValueId = 0 ;
 
     /**
      * 标准规格值Id
