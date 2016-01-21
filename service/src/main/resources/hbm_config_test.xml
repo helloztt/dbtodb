@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ 版权所有:杭州火图科技有限公司
+  ~ 地址:浙江省杭州市滨江区西兴街道阡陌路智慧E谷B幢4楼
+  ~
+  ~ (c) Copyright Hangzhou Hot Technology Co., Ltd.
+  ~ Floor 4,Block B,Wisdom E Valley,Qianmo Road,Binjiang District
+  ~ 2013-2015. All rights reserved.
+  -->
+
+<beans profile="!container" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/hotsupplier_dev?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <bean id="sqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
+        <property name="url" value="jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Dev_HotPdMall"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="123"/>
+    </bean>
+
+    <bean id="mysqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="mysqlDataSource"></property>
+        <property name="persistenceUnitName" value="mysqlEntity" />
+        <property name="packagesToScan" value="type.entity.mysql" />
+        <property name="persistenceProvider">
+            <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+        </property>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="eclipselink.weaving" value="false"/>
+                <entry key="eclipselink.logging.level" value="FINE"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="sqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="sqlDataSource"></property>
+        <property name="persistenceUnitName" value="mysqlEntity" />
+        <property name="packagesToScan" value="type.entity.mssql"/>
+        <property name="persistenceProvider">
+            <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
+        </property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+        </property>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="eclipselink.weaving" value="false"/>
+                <entry key="eclipselink.logging.level" value="FINE"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--事务管理器配置 -->
+    <bean id="mysqlTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="mysqlEntityManagerFactory"/>
+    </bean>
+
+    <bean id="sqlTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="sqlEntityManagerFactory"/>
+    </bean>
+</beans>
