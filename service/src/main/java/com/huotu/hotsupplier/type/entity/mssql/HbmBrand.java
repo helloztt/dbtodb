@@ -27,6 +27,7 @@ import javax.persistence.*;
 public class HbmBrand {
     /**
      * 品牌主键ID
+     * 自增长
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,7 @@ public class HbmBrand {
     private Integer brandId;
     /**
      * 品牌名称
+     * name
      */
     @Column(name = "Brand_Name")
     private String brandName;
@@ -41,7 +43,7 @@ public class HbmBrand {
      * 分销商编号
      */
     @Column(name = "Customer_Id")
-    private int customerId;
+    private int customerId = -1;
     /**
      * 标准品牌ID
      */

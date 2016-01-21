@@ -21,7 +21,7 @@
 
     <bean id="sqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
-        <property name="url" value="jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Dev_HotPdMall"/>
+        <property name="url" value="jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Dev_HotPdMall_New"/>
         <property name="username" value="sa"/>
         <property name="password" value="123"/>
     </bean>
@@ -29,7 +29,7 @@
     <bean id="mysqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="mysqlDataSource"></property>
         <property name="persistenceUnitName" value="mysqlEntity" />
-        <property name="packagesToScan" value="type.entity.mysql" />
+        <property name="packagesToScan" value="com.huotu.hotsupplier.type.entity.mysql" />
         <property name="persistenceProvider">
             <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
         </property>
@@ -47,7 +47,7 @@
     <bean id="sqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="sqlDataSource"></property>
         <property name="persistenceUnitName" value="mysqlEntity" />
-        <property name="packagesToScan" value="type.entity.mssql"/>
+        <property name="packagesToScan" value="com.huotu.hotsupplier.type.entity.mssql"/>
         <property name="persistenceProvider">
             <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
         </property>

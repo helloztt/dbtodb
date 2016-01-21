@@ -41,7 +41,7 @@ public class HbmGoodsType {
      * 是否是实体商品类型
      */
     @Column(name = "Is_Physical")
-    private boolean isPhysical;
+    private boolean isPhysical = true;
     /**
      * 标准商品类目ID
      */
