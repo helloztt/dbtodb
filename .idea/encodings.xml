@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/Starter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/entity/mssql/HbmBrand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/entity/mssql/HbmGoodsSpecIndex.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/entity/mssql/HbmGoodsSpecIndexPK.java" charset="UTF-8" />
@@ -12,6 +15,15 @@
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/repository/HbmGoodsTypeSpecRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/repository/HbmSpecValuesRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/repository/HbmSpecificationRepository.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/HbmBrandService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/PropertyValueService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/impl/HbmBrandServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/impl/HbmGoodsTypeServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/impl/HbmSpecificationServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/impl/PropertyServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/service/impl/PropertyValueServiceImpl.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/resources/hbm_config_test.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/src/main/resources/log4j2.xml" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

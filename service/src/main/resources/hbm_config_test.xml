@@ -14,9 +14,9 @@
 
     <bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/hotsupplier_dev?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
+        <property name="url" value="jdbc:mysql://120.24.243.104:3307/props?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>
+        <property name="username" value="dbuser"/>
+        <property name="password" value="ddbbuusseerr"/>
     </bean>
 
     <bean id="sqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -46,7 +46,7 @@
 
     <bean id="sqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="sqlDataSource"></property>
-        <property name="persistenceUnitName" value="mysqlEntity" />
+        <property name="persistenceUnitName" value="mssqlEntity" />
         <property name="packagesToScan" value="com.huotu.hotsupplier.type.entity.mssql"/>
         <property name="persistenceProvider">
             <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>

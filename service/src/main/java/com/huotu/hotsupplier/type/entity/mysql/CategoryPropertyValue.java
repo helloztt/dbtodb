@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by admin on 2016/1/21.
  */
 @Entity
-@Table(name="categorybrand")
+@Table(name="categoryPropertyValue")
 @IdClass(CategoryPorpertyValuePK.class)
 @Cacheable(false)
 @Getter

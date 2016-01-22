@@ -27,18 +27,18 @@ public class HbmGoodsTypeServiceImpl implements HbmGoodsTypeService {
     @Autowired
     private HbmGoodsSpecIndexRepository goodsSpecIndexRepository;
 
-    //±£´æÉÌÆ·ÀàÄ¿£¬¼°ÖĞ¼ä±í
+    //ä¿å­˜å•†å“ç±»ç›®ï¼ŒåŠä¸­é—´è¡¨
     public HbmGoodsType saveType(Category category) {
         HbmGoodsType type = new HbmGoodsType();
         type.setName(category.getName());
         type.setStandardTypeId(String.valueOf(category.getCid()));
         type.setParent(category.isParent());
-        //Èç¹û¸¸ÀàÄ¿ID²»Îª¿Õ
+        //å¦‚æœçˆ¶ç±»ç›®IDä¸ä¸ºç©º
         if(category.getParentCid() == null){
             type.setParentStandardTypeId("0");
             type.setPath("|" + type.getStandardTypeId() + "|");
         }else{
-            //ÕÒµ½¸¸ÀàÄ¿£¬Æ´½Ópath
+            //æ‰¾åˆ°çˆ¶ç±»ç›®ï¼Œæ‹¼æ¥path
             type.setParentStandardTypeId(String.valueOf(category.getParentCid()));
             HbmGoodsType parentType = typeRepository.findByParentStandardTypeId(type.getParentStandardTypeId());
             type.setPath(parentType.getPath() + type.getStandardTypeId() + "|");

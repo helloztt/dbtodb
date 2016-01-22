@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by admin on 2016/1/21.
  */
 @Entity
-@Table(name="propertyvalue")
+@Table(name="propertyValue")
 @Cacheable(false)
 @Getter
 @Setter

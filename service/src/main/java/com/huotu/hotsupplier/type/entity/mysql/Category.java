@@ -25,7 +25,7 @@ public class Category {
     @Column(length = 20)
     private String status;
     @OneToMany
-    @JoinTable(name = "categoryproperty",joinColumns = {@JoinColumn(name = "cid",referencedColumnName = "categoryId"),
+    @JoinTable(name = "categoryProperty",joinColumns = {@JoinColumn(name = "cid",referencedColumnName = "categoryId"),
     @JoinColumn(name = "id",referencedColumnName = "propertyId")})
     private List<Property> propertyList;
 

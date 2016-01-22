@@ -46,7 +46,7 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
                 spec.setStandardSpecId(String.valueOf(p.getId()));
                 spec.setLastmodify(new Date());
                 spec = specificationRepository.save(spec);
-                //±£¥ÊπÊ∏Ò÷µ
+                //‰øùÂ≠òËßÑÊ†ºÂÄº
                 int page = 0;
                 Page<PropertyValue> propertyValueFirstPage = propertyValueRepository.findByProperty_IdAndProperty_SaleProperty(p.getId(), true,
                         new PageRequest(page, Constant.PAGESIZE));

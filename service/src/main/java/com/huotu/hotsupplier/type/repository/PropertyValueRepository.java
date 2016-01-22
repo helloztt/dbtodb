@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by admin on 2016/1/21.
  */
-public interface PropertyValueRepository extends JpaRepository<PropertyValue, Long>, PropertyValueRepositoryCustom {
+public interface PropertyValueRepository extends JpaRepository<PropertyValue, Long>, JpaSpecificationExecutor {
 
     Page<PropertyValue> findByProperty_NameLike(String name,Pageable pageable);
 

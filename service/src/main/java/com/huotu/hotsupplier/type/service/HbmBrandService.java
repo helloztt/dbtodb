@@ -8,5 +8,6 @@ import java.util.List;
  * Created by admin on 2016/1/21.
  */
 public interface HbmBrandService {
+
     void saveBrandList(List<PropertyValue> brandList);
 }

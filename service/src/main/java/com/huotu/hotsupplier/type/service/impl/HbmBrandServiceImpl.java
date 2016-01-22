@@ -6,7 +6,10 @@ import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
 import com.huotu.hotsupplier.type.repository.HbmBrandRepository;
 import com.huotu.hotsupplier.type.repository.PropertyValueRepository;
 import com.huotu.hotsupplier.type.service.HbmBrandService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +19,13 @@ import java.util.List;
  */
 @Service
 public class HbmBrandServiceImpl implements HbmBrandService {
+    private static final Log log = LogFactory.getLog(HbmBrandServiceImpl.class);
     @Autowired
     private HbmBrandRepository brandRepository;
 
-    //保存品牌列表
+    //淇濆瓨鍝佺墝鍒楄〃
     public void saveBrandList(List<PropertyValue> brandList) {
+        long start = System.currentTimeMillis();
         if (brandList != null && brandList.size() > 0) {
             brandList.forEach(b -> {
                 HbmBrand brand = new HbmBrand();
@@ -36,5 +41,7 @@ public class HbmBrandServiceImpl implements HbmBrandService {
                 brandRepository.save(brand);
             });
         }
+        long end = System.currentTimeMillis();
+        log.info("save brand " + brandList.size() + " cost " +(end-start) + "ms");
     }
 }
