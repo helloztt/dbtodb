@@ -39,6 +39,13 @@ public class Starter {
         propertyService.saveProperty();
         long propEnd = System.currentTimeMillis();
         log.info("end do with prop,last " + (propEnd - propStart) + "ms");
+        ThreadPoolTaskScheduler threadPoolTaskScheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+        while (true){
+            Thread.sleep(1000);
+            if(threadPoolTaskScheduler.getActiveCount() == 0){
+                break;
+            }
+        }
         //处理类目
         log.info("start do with category");
         CategoryService categoryService = ctx.getBean(CategoryService.class);
@@ -46,17 +53,6 @@ public class Starter {
         log.info("start do with type");
         long end = System.currentTimeMillis();
         log.info("dbtodb over , last " + (end-start) + "ms");
-
-
-//        ThreadPoolTaskScheduler threadPoolTaskScheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
-//        while (true){
-//            Thread.sleep(1000);
-//            log.info("current active:"+threadPoolTaskScheduler.getActiveCount());
-//            if (threadPoolTaskScheduler.getActiveCount()==0){
-//                ctx.stop();
-//                return;
-//            }
-//        }
     }
 
 }

@@ -30,20 +30,20 @@ public class HbmGoodsTypeSpecServiceImpl implements HbmGoodsTypeSpecService {
     private HbmGoodsTypeSpecRepository typeSpecRepository;
 
     @Override
-    public void saveTypeSpec(Long categoryId, Long propertyId, Long propertyValueId) {
-        HbmGoodsType type = typeRepository.findByStandardTypeId(String.valueOf(categoryId));
-        if(type == null ){
-            log.info("save type spec error: categoryId ---- type null:"+ categoryId + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
-            return;
-        }
+    public void saveTypeSpec(HbmGoodsType type, Long propertyId, Long propertyValueId) {
+//        HbmGoodsType type = typeRepository.findByStandardTypeId(String.valueOf(categoryId));
+//        if(type == null ){
+//            log.info("save type spec error: categoryId ---- type null:"+ categoryId + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
+//            return;
+//        }
         HbmSpecification spec = specRepository.findByStandardSpecId(String.valueOf(propertyId));
         if(spec == null){
-            log.info("save type spec error: categoryId ---- spec null:"+ categoryId + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
+            log.info("save type spec error: categoryId ---- spec null:"+ type.getStandardTypeId() + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
             return;
         }
         HbmSpecValues specValue = specValuesRepository.findByStandardSpecValueId(String.valueOf(propertyValueId));
         if(specValue == null){
-            log.info("save type spec error: categoryId ---- specValue null:"+ categoryId + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
+            log.info("save type spec error: categoryId ---- specValue null:"+ type.getStandardTypeId() + "propertyId:" + propertyId + ",propertyValueId:" + propertyValueId );
             return;
         }
         HbmGoodsTypeSpec typeSpec = new HbmGoodsTypeSpec();

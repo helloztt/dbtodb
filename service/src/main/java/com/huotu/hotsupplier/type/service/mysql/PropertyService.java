@@ -11,4 +11,6 @@ public interface PropertyService {
     void saveProperty();
 
     Page<Property> getPropertyPages(int start);
+
+
 }

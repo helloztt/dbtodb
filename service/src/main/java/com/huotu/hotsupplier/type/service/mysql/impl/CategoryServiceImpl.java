@@ -4,7 +4,6 @@ import com.huotu.hotsupplier.type.entity.mssql.HbmGoodsType;
 import com.huotu.hotsupplier.type.entity.mysql.Category;
 import com.huotu.hotsupplier.type.entity.mysql.Property;
 import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
-import com.huotu.hotsupplier.type.repository.mssql.HbmTypeBrandRepository;
 import com.huotu.hotsupplier.type.repository.mysql.CategoryRepository;
 import com.huotu.hotsupplier.type.repository.mysql.PropertyRepository;
 import com.huotu.hotsupplier.type.repository.mysql.PropertyValueRepository;
@@ -13,7 +12,7 @@ import com.huotu.hotsupplier.type.service.mssql.HbmGoodsTypeSpecService;
 import com.huotu.hotsupplier.type.service.mssql.HbmTypeBrandService;
 import com.huotu.hotsupplier.type.service.mysql.CategoryService;
 import com.huotu.hotsupplier.type.util.Constant;
-import com.huotu.hotsupplier.type.worker.Runner;
+import com.huotu.hotsupplier.type.worker.CategoryRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -59,12 +58,44 @@ public class CategoryServiceImpl implements CategoryService {
                     //如果没有子类目，则保存类目品牌中间表
 //                    saveBrand(category.getCid(),type);
                     //线程处理
-                    threadPoolTaskScheduler.submit(new Runner(threadPoolTaskScheduler,category.getCid(),type));
+                    threadPoolTaskScheduler.submit(new CategoryRunner(threadPoolTaskScheduler,category.getCid(),type));
                 }else{
                     //如果有子类目，则继续遍历
                     saveCategory(category.getCid(),parentPath + category.getCid() + "|");
                 }
             });
+        }
+    }
+
+    @Override
+    public void saveTypeSpec(Long categoryId,HbmGoodsType type) {
+        //找出标准类目下的所有销售属性
+        List<Property> salePropertyList = propertyRepository.findByCategoryId(categoryId);
+        if(salePropertyList != null && salePropertyList.size() > 0){
+            salePropertyList.forEach(property->{
+                //根据标准类目和销售属性，找出所有属性值
+                List<PropertyValue> propertyValueList = propertyValueRepository.findByCategoryIdAndPropertyId(categoryId,property.getId());
+                if(propertyValueList != null && propertyValueList.size() > 0){
+                    propertyValueList.forEach(propertyValue->{
+                        hbmGoodsTypeSpecService.saveTypeSpec(type,property.getId(),propertyValue.getId());
+                    });
+                }
+            });
+        }
+    }
+
+    @Override
+    public void saveBrand(Long categoryId, HbmGoodsType type) {
+        //分页找出标准类目下的所有品牌
+        int page = 0 ;
+        Page<PropertyValue> brandFirstPage = propertyValueRepository.findBrandByCategoryId(categoryId,new PageRequest(page, Constant.PAGESIZE));
+        int totalPage = brandFirstPage.getTotalPages();
+        if(totalPage >= 1){
+            hbmTypeBrandService.saveTypeBrand(brandFirstPage.getContent(),type);
+            for(page = 1; page < totalPage ; page ++){
+                Page<PropertyValue> brandPage = propertyValueRepository.findBrandByCategoryId(categoryId,new PageRequest(page, Constant.PAGESIZE));
+                hbmTypeBrandService.saveTypeBrand(brandFirstPage.getContent(),type);
+            }
         }
     }
 

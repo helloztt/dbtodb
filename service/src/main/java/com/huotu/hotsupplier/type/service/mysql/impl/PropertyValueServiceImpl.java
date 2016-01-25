@@ -5,11 +5,14 @@ import com.huotu.hotsupplier.type.repository.mysql.PropertyValueRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmBrandService;
 import com.huotu.hotsupplier.type.service.mysql.PropertyValueService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.BrandRunner;
+import com.huotu.hotsupplier.type.worker.CategoryRunner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +25,8 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     private PropertyValueRepository propertyValueRepository;
     @Autowired
     private HbmBrandService brandService;
+    @Autowired
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     @Override
     public void saveBrand() {
@@ -32,8 +37,10 @@ public class PropertyValueServiceImpl implements PropertyValueService {
         if (totalPage >= 1) {
             brandService.saveBrandList(propertyValueFirstPage.getContent());
             for (page = 1; page < totalPage; page++) {
-                Page<PropertyValue> propertyValuePage = getBrandPages(page);
-                brandService.saveBrandList(propertyValuePage.getContent());
+//                Page<PropertyValue> propertyValuePage = getBrandPages(page);
+//                brandService.saveBrandList(propertyValuePage.getContent());
+                //线程处理
+                threadPoolTaskScheduler.submit(new BrandRunner(threadPoolTaskScheduler,page));
             }
         }
     }

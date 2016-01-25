@@ -9,4 +9,8 @@ public interface CategoryService {
     void saveType();
 
     void saveCategory(Long parentCid,String parentPath);
+
+    void saveTypeSpec(Long categoryId,HbmGoodsType type);
+
+    void saveBrand(Long categoryId, HbmGoodsType type);
 }

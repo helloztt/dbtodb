@@ -5,11 +5,13 @@ import com.huotu.hotsupplier.type.repository.mysql.PropertyRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmSpecificationService;
 import com.huotu.hotsupplier.type.service.mysql.PropertyService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.PropertyRunner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +24,8 @@ public class PropertyServiceImpl implements PropertyService {
     private PropertyRepository propertyRepository;
     @Autowired
     private HbmSpecificationService hbmSpecificationService;
+    @Autowired
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     @Override
     public void saveProperty() {
@@ -32,8 +36,10 @@ public class PropertyServiceImpl implements PropertyService {
         if (propertyFirstPage.getContent() != null && propertyFirstPage.getContent().size() > 0) {
             hbmSpecificationService.saveSpecList(propertyFirstPage.getContent());
             for (page = 1; page < totalPage; page++) {
-                Page<Property> propertyPage = getPropertyPages(page);
-                hbmSpecificationService.saveSpecList(propertyPage.getContent());
+//                Page<Property> propertyPage = getPropertyPages(page);
+//                hbmSpecificationService.saveSpecList(propertyPage.getContent());
+                //线程处理
+                threadPoolTaskScheduler.submit(new PropertyRunner(threadPoolTaskScheduler,page));
             }
         }
     }
