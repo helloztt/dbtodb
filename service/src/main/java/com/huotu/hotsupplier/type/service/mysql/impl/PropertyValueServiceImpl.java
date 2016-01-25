@@ -28,9 +28,10 @@ public class PropertyValueServiceImpl implements PropertyValueService {
         int page = 0;
         Page<PropertyValue> propertyValueFirstPage = getBrandPages(page);
         int totalPage = propertyValueFirstPage.getTotalPages();
-        if(totalPage >= 1){
+        log.info("brand count " + totalPage);
+        if (totalPage >= 1) {
             brandService.saveBrandList(propertyValueFirstPage.getContent());
-            for(page = 1 ; page < totalPage ; page ++){
+            for (page = 1; page < totalPage; page++) {
                 Page<PropertyValue> propertyValuePage = getBrandPages(page);
                 brandService.saveBrandList(propertyValuePage.getContent());
             }
@@ -39,6 +40,6 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 
     @Override
     public Page<PropertyValue> getBrandPages(int start) {
-        return propertyValueRepository.findByProperty_NameLike("%品牌%",new PageRequest(start, Constant.PAGESIZE));
+        return propertyValueRepository.findByProperty_NameLike("%品牌%", new PageRequest(start, Constant.PAGESIZE));
     }
 }

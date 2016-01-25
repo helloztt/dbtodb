@@ -5,6 +5,8 @@ import com.huotu.hotsupplier.type.repository.mysql.PropertyRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmSpecificationService;
 import com.huotu.hotsupplier.type.service.mysql.PropertyService;
 import com.huotu.hotsupplier.type.util.Constant;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PropertyServiceImpl implements PropertyService {
+    private static final Log log = LogFactory.getLog(PropertyServiceImpl.class);
     @Autowired
     private PropertyRepository propertyRepository;
     @Autowired
@@ -22,19 +25,21 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public void saveProperty() {
-        int page = 0 ;
+        int page = 0;
         Page<Property> propertyFirstPage = getPropertyPages(page);
         int totalPage = propertyFirstPage.getTotalPages();
-        if(propertyFirstPage.getContent() != null && propertyFirstPage.getContent().size() > 0){
+        log.info("property count " + totalPage);
+        if (propertyFirstPage.getContent() != null && propertyFirstPage.getContent().size() > 0) {
             hbmSpecificationService.saveSpecList(propertyFirstPage.getContent());
-            for(page = 1;page < totalPage ; page ++){
+            for (page = 1; page < totalPage; page++) {
                 Page<Property> propertyPage = getPropertyPages(page);
                 hbmSpecificationService.saveSpecList(propertyPage.getContent());
             }
         }
     }
+
     @Override
     public Page<Property> getPropertyPages(int start) {
-        return propertyRepository.findBySaleProperty(true,new PageRequest(start, Constant.PAGESIZE));
+        return propertyRepository.findBySaleProperty(true, new PageRequest(start, Constant.PAGESIZE));
     }
 }
