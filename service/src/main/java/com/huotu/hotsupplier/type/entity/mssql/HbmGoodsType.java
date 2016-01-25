@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,11 +38,45 @@ public class HbmGoodsType {
      * 类型名称
      */
     private String name;
+
+    @Column(name = "Alias")
+    private String alias = "";
     /**
      * 是否是实体商品类型
      */
     @Column(name = "Is_Physical")
     private boolean isPhysical = true;
+
+    @Column(name = "Supplier_Id")
+    private int supplierId = 0;
+
+    @Column(name = "Supplier_Type_Id")
+    private int supplierTypeId = 0 ;
+
+    @Column(name = "Schema_Id")
+    private String schemaId;
+
+    private String props = "";
+
+    private String spec = "";
+
+    private String setting = "";
+
+    private String minfo = "";
+
+    private String params = "";
+
+    @Column(name = "Dly_Func")
+    private boolean dlyFunc = false;
+
+    @Column(name = "Ret_Func")
+    private boolean retFunc = false;
+
+    private boolean reship = false;
+
+    @Column(name = "Is_Def")
+    private boolean isDef = false;
+
     /**
      * 标准商品类目ID
      */
@@ -74,23 +109,25 @@ public class HbmGoodsType {
     @Column(name = "T_Order")
     private int tOrder;
 
-    @OneToMany
-    @JoinTable(name = "Mall_Type_Brand",joinColumns = {@JoinColumn(name = "Type_Id",referencedColumnName = "Type_Id")},
-    inverseJoinColumns = {@JoinColumn(name = "Brand_Id",referencedColumnName = "Brand_Id")})
-    @OrderBy("orderNum ASC")
+    private Date lastmodify;
 
-    private List<HbmBrand> brandList;
+//    @OneToMany
+//    @JoinTable(name = "Mall_Type_Brand",joinColumns = {@JoinColumn(name = "Type_Id",referencedColumnName = "Type_Id")},
+//    inverseJoinColumns = {@JoinColumn(name = "Brand_Id",referencedColumnName = "Brand_Id")})
+//    @OrderBy("orderNum ASC")
+//
+//    private List<HbmBrand> brandList;
 
 //    @OneToMany
 //    @JoinTable(name = "Mall_Goods_Type_Spec",joinColumns = {@JoinColumn(name = "Type_Id",referencedColumnName = "Type_Id")},
 //    inverseJoinColumns = @JoinColumn(name = "Spec_Id",referencedColumnName = "Spec_Id"))
 //    @OrderBy("order ASC")
-    @Transient
-    private List<HbmSpecification> specList;
+//    @Transient
+//    private List<HbmSpecification> specList;
 
     /**
      * 类目名路径
      */
-    @Transient
-    private String pathStr;
+//    @Transient
+//    private String pathStr;
 }

@@ -1,5 +1,6 @@
 package com.huotu.hotsupplier.type.entity.mysql;
 
+import com.huotu.hotsupplier.type.entity.mysql.Property;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class PropertyValue {
     private String nameAlias;
     private int sortOrder;
     private String status;
+//    private Long propertyId;
     @ManyToOne
     @JoinColumn(name = "propertyId")
     private Property property;

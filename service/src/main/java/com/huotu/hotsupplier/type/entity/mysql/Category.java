@@ -24,9 +24,9 @@ public class Category {
     private String name;
     @Column(length = 20)
     private String status;
-    @OneToMany
-    @JoinTable(name = "categoryProperty",joinColumns = {@JoinColumn(name = "cid",referencedColumnName = "categoryId"),
-    @JoinColumn(name = "id",referencedColumnName = "propertyId")})
-    private List<Property> propertyList;
+//    @OneToMany
+//    @JoinTable(name = "categoryProperty",joinColumns = {@JoinColumn(name = "cid",referencedColumnName = "categoryId"),
+//    @JoinColumn(name = "id",referencedColumnName = "propertyId")})
+//    private List<Property> propertyList;
 
 }

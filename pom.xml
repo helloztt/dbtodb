@@ -38,7 +38,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.huotu.hotsupplier.type.Starter</mainClass>
+                            <mainClass>com.huotu.hotsupplier.type.worker.Starter</mainClass>
                             <!--<mainClass>org.springframework.shell.Bootstrap</mainClass>-->
                         </manifest>
                     </archive>

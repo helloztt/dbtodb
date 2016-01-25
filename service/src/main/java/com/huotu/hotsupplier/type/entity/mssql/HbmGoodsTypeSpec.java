@@ -41,6 +41,6 @@ public class HbmGoodsTypeSpec {
     private int specValueId;
 
     @Column(name = "GTS_Customer_Id")
-    private int customerId;
+    private int customerId = -1;
 
 }
