@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * Created by admin on 2016/1/22.
  */
 public interface HbmTypeBrandRepository extends JpaRepository<HbmTypeBrand, HbmTypeBrandPK>, JpaSpecificationExecutor {
+    HbmTypeBrand findByTypeIdAndBrandId(int typeId,int brandId);
 }

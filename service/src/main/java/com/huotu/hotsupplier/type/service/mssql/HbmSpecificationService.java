@@ -9,7 +9,7 @@ import java.util.List;
  * Created by admin on 2016/1/21.
  */
 public interface HbmSpecificationService {
-
+    void getSpecList();
 
     void saveSpecList(List<Property> propertyList);
 }

@@ -19,16 +19,22 @@
 
     <bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://120.24.243.104:3307/props?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>
-        <property name="username" value="dbuser"/>
-        <property name="password" value="ddbbuusseerr"/>
+        <!--<property name="url" value="jdbc:mysql://120.24.243.104:3307/props?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>-->
+        <property name="url" value="jdbc:mysql://rds9161v8kv61r608m49.mysql.rds.aliyuncs.com:3306/prop3?useUnicode=true&amp;characterEncoding=UTF8"/>
+        <!--<property name="username" value="dbuser"/>-->
+        <property name="username" value="liu_qifu"/>
+        <!--<property name="password" value="ddbbuusseerr"/>-->
+        <property name="password" value="lqf668893"/>
     </bean>
 
     <bean id="sqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
-        <property name="url" value="jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Dev_HotPdMall_New"/>
-        <property name="username" value="sa"/>
-        <property name="password" value="123"/>
+        <property name="url" value="jdbc:jtds:sqlserver://115.28.160.96:1433;DatabaseName=Standard_Test_Ztt"/>
+        <!--<property name="url" value="jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Dev_HotPdmall_New"/>-->
+        <property name="username" value="mall"/>
+        <!--<property name="username" value="sa"/>-->
+        <property name="password" value="root"/>
+        <!--<property name="password" value="123"/>-->
     </bean>
 
     <bean id="mysqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -45,7 +51,7 @@
             <map>
                 <entry key="eclipselink.weaving" value="false"/>
                 <entry key="eclipselink.logging.level" value="FINE"/>
-                <entry key="eclipselink.show_sql" value="FALSE" />
+                <entry key="eclipselink.logging.level.sql" value="OFF"/>
             </map>
         </property>
     </bean>
@@ -64,7 +70,7 @@
             <map>
                 <entry key="eclipselink.weaving" value="false"/>
                 <entry key="eclipselink.logging.level" value="FINE"/>
-                <!--<entry key="eclipselink.logging.level.sql" value="OFF"/>-->
+                <entry key="eclipselink.logging.level.sql" value="OFF"/>
             </map>
         </property>
     </bean>

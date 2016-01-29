@@ -1,11 +1,7 @@
 package com.huotu.hotsupplier.type.worker;
 
-import com.huotu.hotsupplier.type.entity.mysql.Property;
 import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
-import com.huotu.hotsupplier.type.repository.mysql.PropertyRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmBrandService;
-import com.huotu.hotsupplier.type.service.mssql.HbmSpecificationService;
-import com.huotu.hotsupplier.type.service.mysql.PropertyService;
 import com.huotu.hotsupplier.type.service.mysql.PropertyValueService;
 import com.huotu.hotsupplier.type.util.Springfactory;
 import org.apache.commons.logging.Log;
@@ -36,13 +32,16 @@ public class BrandRunner implements Runnable {
     @Override
     public void run() {
         try {
+            long start = System.currentTimeMillis();
             Page<PropertyValue> propertyValuePage = propertyValueService.getBrandPages(pageNo);
             if (propertyValuePage != null && propertyValuePage.getSize() != 0) {
                 brandService.saveBrandList(propertyValuePage.getContent());
             }
+            long end = System.currentTimeMillis();
+            log.info("save brand " + propertyValuePage.getSize() + ",last " + (end - start) + "ms");
         } catch (Exception e) {
             log.error("re submit this runnable", e);
-            taskExecutor.submit(this);
+//            taskExecutor.submit(this);
         }
     }
 }

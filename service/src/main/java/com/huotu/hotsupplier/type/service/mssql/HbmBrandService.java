@@ -10,4 +10,6 @@ import java.util.List;
 public interface HbmBrandService {
 
     void saveBrandList(List<PropertyValue> brandList);
+
+    void getBrandList();
 }

@@ -11,6 +11,8 @@
 package com.huotu.hotsupplier.type.repository.mssql;
 
 import com.huotu.hotsupplier.type.entity.mssql.HbmSpecValues;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -19,4 +21,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface HbmSpecValuesRepository extends JpaRepository<HbmSpecValues, Integer>, JpaSpecificationExecutor {
     HbmSpecValues findByStandardSpecValueId(String standardSpecValueId);
+
+    Page<HbmSpecValues> findBycustomerId(int customerId,Pageable pageable);
 }

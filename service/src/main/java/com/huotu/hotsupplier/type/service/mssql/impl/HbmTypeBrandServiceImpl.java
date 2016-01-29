@@ -7,13 +7,16 @@ import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
 import com.huotu.hotsupplier.type.repository.mssql.HbmBrandRepository;
 import com.huotu.hotsupplier.type.repository.mssql.HbmTypeBrandRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmTypeBrandService;
+import com.huotu.hotsupplier.type.worker.Starter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 /**
  * Created by admin on 2016/1/22.
@@ -27,18 +30,27 @@ public class HbmTypeBrandServiceImpl implements HbmTypeBrandService {
     private HbmBrandRepository brandRepository;
     @Override
     public void saveTypeBrand(List<PropertyValue> brandList, HbmGoodsType type) {
+        long start = System.currentTimeMillis();
         if(brandList != null && brandList.size() > 0){
+            List<HbmTypeBrand> saveTypeBrand = new ArrayList<>();
             brandList.forEach(b -> {
-                HbmBrand brand = brandRepository.findByStandardBrandId(String.valueOf(b.getId()));
-                if (brand == null) {
-                    log.error("save type brand error -- brand null:standardBrandId" + b.getId() + "standardTypeId:" + type.getStandardTypeId());
-                    return;
+                //从缓存中读取brandId
+                Integer brandId = Starter.brandMap.get(String.valueOf(b.getId()));
+                //如果缓存读取失败，则从数据库中读取
+                if(brandId == null ){
+                    brandId = brandRepository.findByStandardBrandId(String.valueOf(b.getId())).getBrandId();
                 }
-                HbmTypeBrand typeBrand = new HbmTypeBrand();
-                typeBrand.setTypeId(type.getTypeId());
-                typeBrand.setBrandId(brand.getBrandId());
-                typeBrandRepository.save(typeBrand);
+                HbmTypeBrand old = typeBrandRepository.findByTypeIdAndBrandId(type.getTypeId(),brandId);
+                if(old == null){
+                    HbmTypeBrand typeBrand = new HbmTypeBrand();
+                    typeBrand.setTypeId(type.getTypeId());
+                    typeBrand.setBrandId(brandId);
+                    saveTypeBrand.add(typeBrand);
+                }
             });
+            typeBrandRepository.save(saveTypeBrand);
         }
+        long end = System.currentTimeMillis();
+        log.info("save type brand " + brandList.size() + " last " + (end-start) + "ms");
     }
 }

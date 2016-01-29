@@ -19,4 +19,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * Created by admin on 2016/1/11.
  */
 public interface HbmGoodsTypeSpecRepository extends JpaRepository<HbmGoodsTypeSpec, HbmGoodsTypeSpecPK>, JpaSpecificationExecutor {
+    HbmGoodsTypeSpec findByTypeIdAndSpecIdAndSpecValueId(int typeId, int specId, int specValueId);
 }

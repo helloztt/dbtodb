@@ -8,5 +8,7 @@ import java.util.List;
  * Created by admin on 2016/1/21.
  */
 public interface HbmSpecValuesService {
+    void getSpecValueList();
+
     void saveSpecValues(List<PropertyValue> propertyValueList,int specId);
 }
