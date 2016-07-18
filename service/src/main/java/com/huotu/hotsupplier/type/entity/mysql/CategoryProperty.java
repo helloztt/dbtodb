@@ -19,4 +19,5 @@ public class CategoryProperty {
     private Long categoryId;
     @Id
     private Long propertyId;
+    private boolean saleProperty;
 }

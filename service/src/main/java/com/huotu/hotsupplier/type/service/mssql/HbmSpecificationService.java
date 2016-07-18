@@ -12,4 +12,8 @@ public interface HbmSpecificationService {
     void getSpecList();
 
     void saveSpecList(List<Property> propertyList);
+
+    HbmSpecification saveSpec(Property property);
+
+    long getSpecCount();
 }

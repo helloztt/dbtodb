@@ -26,7 +26,7 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
     @Override
     public void getSpecValueList() {
         int page = 0;
-        Page<HbmSpecValues> specValueFirstPage = specValuesRepository.findBycustomerId(-1, new PageRequest(page, Constant.PAGESIZE));
+        Page<HbmSpecValues> specValueFirstPage = specValuesRepository.findByCustomerId(-1, new PageRequest(page, Constant.READPAGESIZE));
         int totalPage = specValueFirstPage.getTotalPages();
         if (totalPage > 0) {
             specValueFirstPage.getContent().forEach(p -> {
@@ -35,7 +35,7 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
                 }
             });
             for (page = 1; page < totalPage; page++) {
-                Page<HbmSpecValues> specValuesPage = specValuesRepository.findBycustomerId(-1, new PageRequest(page, Constant.PAGESIZE));
+                Page<HbmSpecValues> specValuesPage = specValuesRepository.findByCustomerId(-1, new PageRequest(page, Constant.READPAGESIZE));
                 specValuesPage.getContent().forEach(p -> {
                     if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
                         Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
@@ -60,13 +60,33 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
                     hbmSpecValues.setOrder(p.getSortOrder());
                     hbmSpecValues.setStandardSpecValueId(String.valueOf(p.getId()));
                     saveSpecValues.add(hbmSpecValues);
+                    if (saveSpecValues.size() > 0 && saveSpecValues.size() % Constant.PAGESIZE == 0) {
+                        saveSpecValueList(saveSpecValues);
+                        saveSpecValues.clear();
+                    }
                 }
             });
-            specValuesRepository.save(saveSpecValues).forEach(p -> {
-                if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
-                    Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
-                }
-            });
+            if (saveSpecValues.size() > 0) {
+                saveSpecValueList(saveSpecValues);
+            }
         }
+    }
+
+    private void saveSpecValueList(List<HbmSpecValues> specValues) {
+        specValuesRepository.save(specValues).forEach(p -> {
+            if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
+                Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
+            }
+        });
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public long getSpecValueCount() {
+        return specValuesRepository.count();
     }
 }

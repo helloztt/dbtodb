@@ -33,7 +33,7 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
     @Override
     public void getSpecList() {
         int page = 0 ;
-        Page<HbmSpecification> specFirstPage = specificationRepository.findByCustomerId(-1,new PageRequest(page,Constant.PAGESIZE));
+        Page<HbmSpecification> specFirstPage = specificationRepository.findByCustomerId(-1,new PageRequest(page,Constant.READPAGESIZE));
         int totalPage = specFirstPage.getTotalPages();
         if(totalPage > 0){
             specFirstPage.getContent().forEach(p->{
@@ -42,7 +42,7 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
                 }
             });
             for(page = 1;page<totalPage ; page ++){
-                Page<HbmSpecification> specPage = specificationRepository.findByCustomerId(-1,new PageRequest(page,Constant.PAGESIZE));
+                Page<HbmSpecification> specPage = specificationRepository.findByCustomerId(-1,new PageRequest(page,Constant.READPAGESIZE));
                 specPage.getContent().forEach(p->{
                     if(!Starter.specMap.containsKey(p.getStandardSpecId())){
                         Starter.specMap.put(p.getStandardSpecId(),p.getSpecId());
@@ -79,15 +79,57 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
                 //保存规格值
                 int page = 0;
                 Page<PropertyValue> propertyValueFirstPage = propertyValueRepository.findByProperty_IdAndProperty_SaleProperty(p.getId(), true,
-                        new PageRequest(page, Constant.PAGESIZE));
+                        new PageRequest(page, Constant.READPAGESIZE));
                 specValuesService.saveSpecValues(propertyValueFirstPage.getContent(), specId);
                 int total = propertyValueFirstPage.getTotalPages();
                 for (page = 1; page < total; page ++) {
                     Page<PropertyValue> propertyValuePage = propertyValueRepository.findByProperty_IdAndProperty_SaleProperty(p.getId(), true,
-                            new PageRequest(page, Constant.PAGESIZE));
+                            new PageRequest(page, Constant.READPAGESIZE));
                     specValuesService.saveSpecValues(propertyValuePage.getContent(), specId);
                 }
             });
         }
+    }
+
+    @Override
+    public HbmSpecification saveSpec(Property p) {
+        Integer specId;
+        HbmSpecification spec = specificationRepository.findByStandardSpecId(p.getId().toString());
+        if(spec == null){
+            spec = new HbmSpecification();
+            spec.setSpecName(p.getName());
+            spec.setOrder(p.getSortOrder());
+            if ("normal".equals(p.getStatus())) {
+                spec.setDisabled(false);
+            } else {
+                spec.setDisabled(true);
+            }
+            spec.setStandardSpecId(String.valueOf(p.getId()));
+            spec.setLastmodify(new Date());
+            spec = specificationRepository.save(spec);
+            if(!Starter.specMap.containsKey(spec.getStandardSpecId())){
+                Starter.specMap.put(spec.getStandardSpecId(),spec.getSpecId());
+            }
+            specId = spec.getSpecId();
+        }else{
+            specId = Starter.specMap.get(String.valueOf(p.getId()));
+        }
+        //保存规格值
+        int page = 0;
+        Page<PropertyValue> propertyValueFirstPage = propertyValueRepository.findByProperty_IdAndProperty_SaleProperty(p.getId(), true,
+                new PageRequest(page, Constant.PAGESIZE));
+        specValuesService.saveSpecValues(propertyValueFirstPage.getContent(), specId);
+        int total = propertyValueFirstPage.getTotalPages();
+        for (page = 1; page < total; page ++) {
+            Page<PropertyValue> propertyValuePage = propertyValueRepository.findByProperty_IdAndProperty_SaleProperty(p.getId(), true,
+                    new PageRequest(page, Constant.PAGESIZE));
+            specValuesService.saveSpecValues(propertyValuePage.getContent(), specId);
+        }
+        return spec;
+    }
+
+    @Override
+    public long getSpecCount() {
+        return specificationRepository.count();
     }
 }

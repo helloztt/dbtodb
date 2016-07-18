@@ -39,6 +39,7 @@ public class BrandRunner implements Runnable {
             }
             long end = System.currentTimeMillis();
             log.info("save brand " + propertyValuePage.getSize() + ",last " + (end - start) + "ms");
+            Thread.sleep(100);
         } catch (Exception e) {
             log.error("re submit this runnable", e);
 //            taskExecutor.submit(this);

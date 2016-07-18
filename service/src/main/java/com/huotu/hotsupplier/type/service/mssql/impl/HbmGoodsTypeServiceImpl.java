@@ -24,25 +24,39 @@ public class HbmGoodsTypeServiceImpl implements HbmGoodsTypeService {
     private HbmSpecValuesRepository specValuesRepository;
 
     //保存商品类目，及中间表
-    public HbmGoodsType saveType(Category category,String parentPath) {
+    public HbmGoodsType saveType(Category category, String parentPath) {
         HbmGoodsType type = new HbmGoodsType();
         type.setName(category.getName());
         type.setStandardTypeId(String.valueOf(category.getCid()));
         type.setParent(category.isParent());
         //如果父类目ID不为空
-        if(category.getParentCid() == null){
+        if (category.getParentCid() == null) {
             type.setParentStandardTypeId("0");
-        }else{
+        } else {
             //找到父类目，拼接path
             type.setParentStandardTypeId(String.valueOf(category.getParentCid()));
         }
         type.setPath(parentPath + type.getStandardTypeId() + "|");
-        type.setDisabled(false);
+        if ("normal".equals(category.getStatus())) {
+            type.setDisabled(false);
+        } else {
+            type.setDisabled(true);
+        }
         type.setCustomerId(-1);
         type.setTOrder(0);
         type.setSchemaId(category.getStatus());
         type.setLastmodify(new Date());
         type = typeRepository.save(type);
         return type;
+    }
+
+    @Override
+    public HbmGoodsType findByStandardTypeId(String standardTypeId) {
+        return typeRepository.findByStandardTypeId(standardTypeId);
+    }
+
+    @Override
+    public long getTypeCount() {
+        return typeRepository.count();
     }
 }

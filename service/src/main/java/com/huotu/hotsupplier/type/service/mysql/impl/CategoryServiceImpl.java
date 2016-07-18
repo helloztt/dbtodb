@@ -5,12 +5,14 @@ import com.huotu.hotsupplier.type.entity.mssql.HbmSpecification;
 import com.huotu.hotsupplier.type.entity.mysql.Category;
 import com.huotu.hotsupplier.type.entity.mysql.Property;
 import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
+import com.huotu.hotsupplier.type.repository.mssql.HbmGoodsTypeRepository;
 import com.huotu.hotsupplier.type.repository.mssql.HbmSpecificationRepository;
 import com.huotu.hotsupplier.type.repository.mysql.CategoryRepository;
 import com.huotu.hotsupplier.type.repository.mysql.PropertyRepository;
 import com.huotu.hotsupplier.type.repository.mysql.PropertyValueRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmGoodsTypeService;
 import com.huotu.hotsupplier.type.service.mssql.HbmGoodsTypeSpecService;
+import com.huotu.hotsupplier.type.service.mssql.HbmSpecificationService;
 import com.huotu.hotsupplier.type.service.mssql.HbmTypeBrandService;
 import com.huotu.hotsupplier.type.service.mysql.CategoryService;
 import com.huotu.hotsupplier.type.util.Constant;
@@ -21,7 +23,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private HbmTypeBrandService hbmTypeBrandService;
     @Autowired
+    private HbmSpecificationService specificationService;
+    @Autowired
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     @Override
@@ -52,11 +58,31 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public void saveSome(Long propertyId) {
+        //根据属性ID查找属性
+        Property property = propertyRepository.findOne(propertyId);
+        //保存属性及属性值
+        HbmSpecification spec = specificationService.saveSpec(property);
+        Integer specId = spec.getSpecId();
+        //保存中间表
+        if(property != null){
+            List<Category> categoryList = categoryRepository.findBySpecId(propertyId);
+            if(categoryList != null && categoryList.size() > 0){
+                categoryList.forEach(category -> {
+                    HbmGoodsType type = hbmGoodsTypeService.findByStandardTypeId(category.getCid().toString());
+                    List<PropertyValue> propertyValueList = propertyValueRepository.findByCategoryIdAndPropertyId(category.getCid(),propertyId);
+                    hbmGoodsTypeSpecService.saveTypeSpec(type, specId, propertyValueList);
+                });
+            }
+        }
+    }
+
+    @Override
     public void saveCategory(Long parentCid, String parentPath) {
         List<Category> categoryList = categoryRepository.findByParentCid(parentCid);
         if (categoryList != null && categoryList.size() > 0) {
             categoryList.forEach(category -> {
-                if(category.getCid() == 1201){
+                if (category.getCid() == 1201) {
                     System.out.println();
                 }
                 HbmGoodsType type = hbmGoodsTypeService.saveType(category, parentPath);
@@ -67,6 +93,11 @@ public class CategoryServiceImpl implements CategoryService {
 //                    saveBrand(category.getCid(),type);
                     //线程处理
                     threadPoolTaskScheduler.submit(new CategoryRunner(threadPoolTaskScheduler, category.getCid(), type));
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     //如果有子类目，则继续遍历
                     saveCategory(category.getCid(), parentPath + category.getCid() + "|");
@@ -84,12 +115,12 @@ public class CategoryServiceImpl implements CategoryService {
                 //从缓存中获取规格对应的ID
                 Integer specId = Starter.specMap.get(String.valueOf(property.getId()));
                 //若缓存读取失败，则从数据库中读取
-                if(specId == null){
+                if (specId == null) {
                     specId = specRepository.findByStandardSpecId(String.valueOf(property.getId())).getSpecId();
                 }
                 //根据标准类目和销售属性，找出所有属性值
                 List<PropertyValue> propertyValueList = propertyValueRepository.findByCategoryIdAndPropertyId(categoryId, property.getId());
-                hbmGoodsTypeSpecService.saveTypeSpec(type, specId,propertyValueList);
+                hbmGoodsTypeSpecService.saveTypeSpec(type, specId, propertyValueList);
             });
         }
     }
@@ -98,15 +129,14 @@ public class CategoryServiceImpl implements CategoryService {
     public void saveBrand(Long categoryId, HbmGoodsType type) {
         //分页找出标准类目下的所有品牌
         int page = 0;
-        Page<PropertyValue> brandFirstPage = propertyValueRepository.findBrandByCategoryId(categoryId, new PageRequest(page, Constant.PAGESIZE));
+        Page<PropertyValue> brandFirstPage = propertyValueRepository.findBrandByCategoryId(categoryId, new PageRequest(page, Constant.READPAGESIZE));
         int totalPage = brandFirstPage.getTotalPages();
         if (totalPage >= 1) {
             hbmTypeBrandService.saveTypeBrand(brandFirstPage.getContent(), type);
             for (page = 1; page < totalPage; page++) {
-                Page<PropertyValue> brandPage = propertyValueRepository.findBrandByCategoryId(categoryId, new PageRequest(page, Constant.PAGESIZE));
+                Page<PropertyValue> brandPage = propertyValueRepository.findBrandByCategoryId(categoryId, new PageRequest(page, Constant.READPAGESIZE));
                 hbmTypeBrandService.saveTypeBrand(brandPage.getContent(), type);
             }
         }
     }
-
 }

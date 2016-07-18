@@ -8,6 +8,8 @@ import com.huotu.hotsupplier.type.entity.mssql.HbmGoodsType;
 public interface CategoryService {
     void saveType();
 
+    void saveSome(Long propertyId);
+
     void saveCategory(Long parentCid,String parentPath);
 
     void saveTypeSpec(Long categoryId,HbmGoodsType type);

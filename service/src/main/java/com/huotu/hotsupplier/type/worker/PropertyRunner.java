@@ -36,6 +36,7 @@ public class PropertyRunner implements Runnable{
         try {
             Page<Property> propertyPage = propertyService.getPropertyPages(pageNo);
             hbmSpecificationService.saveSpecList(propertyPage.getContent());
+            Thread.sleep(100);
         }catch (Exception e){
             log.error("re submit this runnable", e);
 //            taskExecutor.submit(this);

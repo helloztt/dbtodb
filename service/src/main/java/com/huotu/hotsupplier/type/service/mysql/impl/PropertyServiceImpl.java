@@ -34,18 +34,23 @@ public class PropertyServiceImpl implements PropertyService {
         int totalPage = propertyFirstPage.getTotalPages();
         log.info("property count " + totalPage);
         if (propertyFirstPage.getContent() != null && propertyFirstPage.getContent().size() > 0) {
-            hbmSpecificationService.saveSpecList(propertyFirstPage.getContent());
-            for (page = 1; page < totalPage; page++) {
+//            hbmSpecificationService.saveSpecList(propertyFirstPage.getContent());
+            for (page = 0; page < totalPage; page++) {
 //                Page<Property> propertyPage = getPropertyPages(page);
 //                hbmSpecificationService.saveSpecList(propertyPage.getContent());
                 //线程处理
-                threadPoolTaskScheduler.submit(new PropertyRunner(threadPoolTaskScheduler,page));
+                threadPoolTaskScheduler.submit(new PropertyRunner(threadPoolTaskScheduler, page));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @Override
     public Page<Property> getPropertyPages(int start) {
-        return propertyRepository.findBySaleProperty(true, new PageRequest(start, Constant.PAGESIZE));
+        return propertyRepository.findBySaleProperty(true, new PageRequest(start, Constant.READPAGESIZE));
     }
 }

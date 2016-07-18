@@ -19,6 +19,5 @@ public class Property {
     private Long id;
     private String name;
     private int sortOrder;
-    private boolean saleProperty;
     private String status;
 }

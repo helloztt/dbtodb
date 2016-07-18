@@ -41,12 +41,17 @@ public class PropertyValueServiceImpl implements PropertyValueService {
 //                brandService.saveBrandList(propertyValuePage.getContent());
                 //线程处理
                 threadPoolTaskScheduler.submit(new BrandRunner(threadPoolTaskScheduler,page));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @Override
     public Page<PropertyValue> getBrandPages(int start) {
-        return propertyValueRepository.findByProperty_NameLike("%品牌%", new PageRequest(start, Constant.PAGESIZE));
+        return propertyValueRepository.findByProperty_NameLike("%品牌%", new PageRequest(start, Constant.READPAGESIZE));
     }
 }

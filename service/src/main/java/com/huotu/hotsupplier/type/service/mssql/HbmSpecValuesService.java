@@ -11,4 +11,6 @@ public interface HbmSpecValuesService {
     void getSpecValueList();
 
     void saveSpecValues(List<PropertyValue> propertyValueList,int specId);
+
+    long getSpecValueCount();
 }

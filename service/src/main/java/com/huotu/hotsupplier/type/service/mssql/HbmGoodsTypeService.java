@@ -10,4 +10,8 @@ import com.huotu.hotsupplier.type.entity.mysql.Category;
 public interface HbmGoodsTypeService {
     HbmGoodsType saveType(Category category,String parentPath);
 
+    HbmGoodsType findByStandardTypeId(String standardTypeId);
+
+    long getTypeCount();
+
 }

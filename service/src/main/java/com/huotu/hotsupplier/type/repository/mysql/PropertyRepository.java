@@ -13,10 +13,11 @@ import java.util.List;
  * Created by admin on 2016/1/21.
  */
 public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSpecificationExecutor {
+    @Query("SELECT DISTINCT b FROM CategoryProperty  a,Property b WHERE a.propertyId = b.id AND a.saleProperty = ?1")
     Page<Property> findBySaleProperty(boolean saleProperty,Pageable pageable);
 
 
-    @Query("SELECT b FROM CategoryProperty a,Property b WHERE a.propertyId = b.id AND a.categoryId = ?1 AND b.saleProperty = true ")
+    @Query("SELECT DISTINCT b FROM CategoryProperty a,Property b WHERE a.propertyId = b.id AND a.categoryId = ?1 AND a.saleProperty = true ")
     List<Property> findByCategoryId(Long categoryId);
 
 

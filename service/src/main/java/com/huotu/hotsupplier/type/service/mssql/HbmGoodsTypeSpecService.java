@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface HbmGoodsTypeSpecService {
     void saveTypeSpec(HbmGoodsType type,Integer specId,List<PropertyValue> propertyValueList);
+
+    long getTypeSpecCount();
 }

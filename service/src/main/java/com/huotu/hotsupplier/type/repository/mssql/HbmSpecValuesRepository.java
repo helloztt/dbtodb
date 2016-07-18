@@ -22,5 +22,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface HbmSpecValuesRepository extends JpaRepository<HbmSpecValues, Integer>, JpaSpecificationExecutor {
     HbmSpecValues findByStandardSpecValueId(String standardSpecValueId);
 
-    Page<HbmSpecValues> findBycustomerId(int customerId,Pageable pageable);
+    Page<HbmSpecValues> findByCustomerId(int customerId,Pageable pageable);
 }

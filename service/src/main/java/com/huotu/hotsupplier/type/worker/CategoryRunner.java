@@ -35,6 +35,7 @@ public class CategoryRunner implements Runnable {
             categoryService.saveTypeSpec(categoryId, type);
             //如果没有子类目，则保存类目品牌中间表
             categoryService.saveBrand(categoryId, type);
+            Thread.sleep(100);
         } catch (Throwable e) {
             log.error("re submit this runnable", e);
 //            taskExecutor.submit(this);

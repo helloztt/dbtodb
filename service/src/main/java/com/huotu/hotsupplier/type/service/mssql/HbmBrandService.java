@@ -12,4 +12,6 @@ public interface HbmBrandService {
     void saveBrandList(List<PropertyValue> brandList);
 
     void getBrandList();
+
+    long getBrandCount();
 }

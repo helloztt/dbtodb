@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface HbmTypeBrandService {
     void saveTypeBrand(List<PropertyValue> brandList,HbmGoodsType type);
+
+    long getTypeBrandCount();
 }

@@ -16,11 +16,12 @@ public interface PropertyValueRepository extends JpaRepository<PropertyValue, Lo
 
     Page<PropertyValue> findByProperty_NameLike(String name,Pageable pageable);
 
+    @Query("SELECT DISTINCT a FROM PropertyValue a, CategoryProperty b WHERE a.property.id = b.propertyId and a.property.id = ?1 and b.saleProperty = ?2")
     Page<PropertyValue> findByProperty_IdAndProperty_SaleProperty(Long propertyId,boolean saleProperty,Pageable pageable);
 
-    @Query("SELECT b FROM CategoryPropertyValue a,PropertyValue b WHERE  a.propertyValueId = b.id AND a.categoryId = ?1 AND b.property.id = ?2")
+    @Query("SELECT DISTINCT b FROM CategoryPropertyValue a,PropertyValue b WHERE  a.propertyValueId = b.id AND a.categoryId = ?1 AND b.property.id = ?2")
     List<PropertyValue> findByCategoryIdAndPropertyId(Long categoryId,Long propertyId);
-    @Query("SELECT b FROM CategoryPropertyValue a,PropertyValue b WHERE a.propertyValueId = b.id AND a.categoryId = ?1 AND b.property.name like '%品牌%'")
+    @Query("SELECT DISTINCT b FROM CategoryPropertyValue a,PropertyValue b WHERE a.propertyValueId = b.id AND a.categoryId = ?1 AND b.property.name like '%品牌%'")
     Page<PropertyValue> findBrandByCategoryId(Long categoryId,Pageable pageable);
 
 }

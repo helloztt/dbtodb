@@ -60,4 +60,9 @@ public class HbmGoodsTypeSpecServiceImpl implements HbmGoodsTypeSpecService {
         long end = System.currentTimeMillis();
         log.info("save type spec value " + propertyValueList.size() + " ,last " + (end-start) + "ms");
     }
+
+    @Override
+    public long getTypeSpecCount() {
+        return typeSpecRepository.count();
+    }
 }
