@@ -18,8 +18,8 @@
         <processorPath useClasspath="true" />
       </profile>
       <profile default="false" name="Annotation profile for service" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="service" />
@@ -28,6 +28,7 @@
     <bytecodeTargetLevel>
       <module name="dbtodb" target="1.8" />
       <module name="service" target="1.8" />
+      <module name="taobao" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
