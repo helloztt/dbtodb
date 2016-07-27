@@ -19,12 +19,12 @@
 
     <bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/type?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
-        <!--<property name="url" value="jdbc:mysql://rds9161v8kv61r608m49.mysql.rds.aliyuncs.com:3306/props_cn?useUnicode=true&amp;characterEncoding=UTF8"/>-->
-        <!--<property name="username" value="liu_qifu"/>-->
-        <!--<property name="password" value="lqf668893"/>-->
+        <!--<property name="url" value="jdbc:mysql://192.168.3.22:3306/type?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>-->
+        <!--<property name="username" value="root"/>-->
+        <!--<property name="password" value="123456"/>-->
+        <property name="url" value="jdbc:mysql://rds9161v8kv61r608m49.mysql.rds.aliyuncs.com:3306/props_cn?useUnicode=true&amp;characterEncoding=UTF8"/>
+        <property name="username" value="helloztt"/>
+        <property name="password" value="ztt3680146!!!"/>
     </bean>
 
     <bean id="sqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -34,13 +34,17 @@
         <!--<property name="username" value="sa"/>-->
         <!--<property name="password" value="123"/>-->
 
-        <!--<property name="url" value="jdbc:jtds:sqlserver://115.28.160.96:1433;DatabaseName=Standard_Test_Ztt"/>-->
+        <!--<property name="url" value="jdbc:jtds:sqlserver://115.28.160.96:1433;DatabaseName=HotPdMall_Test"/>-->
         <!--<property name="username" value="mall"/>-->
         <!--<property name="password" value="root123"/>-->
 
-        <property name="url" value="jdbc:jtds:sqlserver://192.168.1.146:1433;DatabaseName=Dev_HotPdmall"/>
-        <property name="username" value="hotdev"/>
-        <property name="password" value="hot@1234"/>
+        <property name="url" value="jdbc:jtds:sqlserver://rm-wz9n4v4x9sy308973.sqlserver.rds.aliyuncs.com:3433;DatabaseName=hotpdmall"/>
+        <property name="username" value="hotoutfit"/>
+        <property name="password" value="ofh8201v_sgo"/>
+
+        <!--<property name="url" value="jdbc:jtds:sqlserver://192.168.1.146:1433;DatabaseName=Dev_HotPdmall"/>-->
+        <!--<property name="username" value="hotdev"/>-->
+        <!--<property name="password" value="hot@1234"/>-->
     </bean>
 
     <bean id="mysqlEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -76,7 +80,7 @@
             <map>
                 <entry key="eclipselink.weaving" value="false"/>
                 <entry key="eclipselink.logging.level" value="FINE"/>
-                <!--<entry key="eclipselink.logging.level.sql" value="OFF"/>-->
+                <entry key="eclipselink.logging.level.sql" value="OFF"/>
             </map>
         </property>
     </bean>

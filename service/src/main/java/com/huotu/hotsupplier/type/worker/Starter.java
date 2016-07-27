@@ -49,8 +49,8 @@ public class Starter {
         CategoryService categoryService = ctx.getBean(CategoryService.class);
 
         //启动线程，持续获取数据，测试导入过程中对数据库查询的影响
-//        TestRunner testRunner = new TestRunner(brandService,specService,specValuesService,typeService,typeSpecService,typeBrandService,true);
-//        new Thread(testRunner).start();
+        /*TestRunner testRunner = new TestRunner(brandService,specService,specValuesService,typeService,typeSpecService,typeBrandService,true);
+        new Thread(testRunner).start();*/
 
         //获取已保存的品牌
         log.info("start get brand");
@@ -91,7 +91,7 @@ public class Starter {
                 break;
             }
         }
-//        testRunner.setRun(false);
+        /*testRunner.setRun(false);*/
         long end = System.currentTimeMillis();
         log.info("dbtodb over , last " + (end - start) + "ms");
             /*}else{

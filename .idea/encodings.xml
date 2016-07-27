@@ -23,7 +23,6 @@
     <file url="file://$PROJECT_DIR$/service/src/main/java/com/huotu/hotsupplier/type/worker/Starter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/resources/hbm_config_test.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/resources/log4j2.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/taobao" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
