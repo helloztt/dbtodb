@@ -5,6 +5,7 @@ import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
 import com.huotu.hotsupplier.type.repository.mssql.HbmSpecValuesRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmSpecValuesService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,15 +31,15 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
         int totalPage = specValueFirstPage.getTotalPages();
         if (totalPage > 0) {
             specValueFirstPage.getContent().forEach(p -> {
-                if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
-                    Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
+                if (!StartRunner.specValueMap.containsKey(p.getStandardSpecValueId())) {
+                    StartRunner.specValueMap.put(p.getStandardSpecValueId(), p.getId());
                 }
             });
             for (page = 1; page < totalPage; page++) {
                 Page<HbmSpecValues> specValuesPage = specValuesRepository.findByCustomerId(-1, new PageRequest(page, Constant.READPAGESIZE));
                 specValuesPage.getContent().forEach(p -> {
-                    if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
-                        Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
+                    if (!StartRunner.specValueMap.containsKey(p.getStandardSpecValueId())) {
+                        StartRunner.specValueMap.put(p.getStandardSpecValueId(), p.getId());
                     }
                 });
             }
@@ -52,7 +53,7 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
             List<HbmSpecValues> saveSpecValues = new ArrayList<>();
             propertyValueList.forEach(p -> {
 //                HbmSpecValues old = specValuesRepository.findByStandardSpecValueId(String.valueOf(p.getId()));
-                if (!Starter.specValueMap.containsKey(String.valueOf(p.getId()))) {
+                if (!StartRunner.specValueMap.containsKey(String.valueOf(p.getId()))) {
                     HbmSpecValues hbmSpecValues = new HbmSpecValues();
                     hbmSpecValues.setSpecId(specId);
                     hbmSpecValues.setValue(p.getName());
@@ -74,8 +75,8 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
 
     private void saveSpecValueList(List<HbmSpecValues> specValues) {
         specValuesRepository.save(specValues).forEach(p -> {
-            if (!Starter.specValueMap.containsKey(p.getStandardSpecValueId())) {
-                Starter.specValueMap.put(p.getStandardSpecValueId(), p.getId());
+            if (!StartRunner.specValueMap.containsKey(p.getStandardSpecValueId())) {
+                StartRunner.specValueMap.put(p.getStandardSpecValueId(), p.getId());
             }
         });
         try {

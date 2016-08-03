@@ -19,7 +19,7 @@
 
     <bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <!--<property name="url" value="jdbc:mysql://192.168.3.22:3306/type?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>-->
+        <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/type?useUnicode=true&amp;characterEncoding=UTF8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE"/>-->
         <!--<property name="username" value="root"/>-->
         <!--<property name="password" value="123456"/>-->
         <property name="url" value="jdbc:mysql://rds9161v8kv61r608m49.mysql.rds.aliyuncs.com:3306/props_cn?useUnicode=true&amp;characterEncoding=UTF8"/>
@@ -38,9 +38,9 @@
         <!--<property name="username" value="mall"/>-->
         <!--<property name="password" value="root123"/>-->
 
-        <property name="url" value="jdbc:jtds:sqlserver://rm-wz9n4v4x9sy308973.sqlserver.rds.aliyuncs.com:3433;DatabaseName=hotpdmall"/>
-        <property name="username" value="hotoutfit"/>
-        <property name="password" value="ofh8201v_sgo"/>
+        <property name="url" value="jdbc:jtds:sqlserver://rdslhq835294o5lc13j6.sqlserver.rds.aliyuncs.com:3433;Database=hotpdmall"/>
+        <property name="username" value="huotusa"/>
+        <property name="password" value="huotu_sa111"/>
 
         <!--<property name="url" value="jdbc:jtds:sqlserver://192.168.1.146:1433;DatabaseName=Dev_HotPdmall"/>-->
         <!--<property name="username" value="hotdev"/>-->

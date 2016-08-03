@@ -106,9 +106,9 @@ public class TestRunner implements Runnable {
     }
 
     private void print() {
-        log.info("brand size:" + Starter.brandMap.size());
-        log.info("spec size:" + Starter.specMap.size());
-        log.info("spec value size:" + Starter.specValueMap.size());
+        log.info("brand size:" + StartRunner.brandMap.size());
+        log.info("spec size:" + StartRunner.specMap.size());
+        log.info("spec value size:" + StartRunner.specValueMap.size());
         log.info("maxBrand:" + maxBrand/1000);
         log.info("maxSpec:" + maxSpec/1000);
         log.info("maxSpecValue:" + maxSpecValue/1000);

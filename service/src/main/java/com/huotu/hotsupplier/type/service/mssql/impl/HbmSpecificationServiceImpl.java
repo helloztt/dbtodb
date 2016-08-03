@@ -8,6 +8,7 @@ import com.huotu.hotsupplier.type.repository.mysql.PropertyValueRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmSpecValuesService;
 import com.huotu.hotsupplier.type.service.mssql.HbmSpecificationService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,15 +38,15 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
         int totalPage = specFirstPage.getTotalPages();
         if(totalPage > 0){
             specFirstPage.getContent().forEach(p->{
-                if(!Starter.specMap.containsKey(p.getStandardSpecId())){
-                    Starter.specMap.put(p.getStandardSpecId(),p.getSpecId());
+                if(!StartRunner.specMap.containsKey(p.getStandardSpecId())){
+                    StartRunner.specMap.put(p.getStandardSpecId(),p.getSpecId());
                 }
             });
             for(page = 1;page<totalPage ; page ++){
                 Page<HbmSpecification> specPage = specificationRepository.findByCustomerId(-1,new PageRequest(page,Constant.READPAGESIZE));
                 specPage.getContent().forEach(p->{
-                    if(!Starter.specMap.containsKey(p.getStandardSpecId())){
-                        Starter.specMap.put(p.getStandardSpecId(),p.getSpecId());
+                    if(!StartRunner.specMap.containsKey(p.getStandardSpecId())){
+                        StartRunner.specMap.put(p.getStandardSpecId(),p.getSpecId());
                     }
                 });
             }
@@ -57,7 +58,7 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
             propertyList.forEach(p -> {
 //                HbmSpecification spec = specificationRepository.findByStandardSpecId(String.valueOf(p.getId()));
                 Integer specId;
-                if(!Starter.specMap.containsKey(String.valueOf(p.getId()))){
+                if(!StartRunner.specMap.containsKey(String.valueOf(p.getId()))){
                     HbmSpecification spec = new HbmSpecification();
                     spec.setSpecName(p.getName());
                     spec.setOrder(p.getSortOrder());
@@ -69,12 +70,12 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
                     spec.setStandardSpecId(String.valueOf(p.getId()));
                     spec.setLastmodify(new Date());
                     spec = specificationRepository.save(spec);
-                    if(!Starter.specMap.containsKey(spec.getStandardSpecId())){
-                        Starter.specMap.put(spec.getStandardSpecId(),spec.getSpecId());
+                    if(!StartRunner.specMap.containsKey(spec.getStandardSpecId())){
+                        StartRunner.specMap.put(spec.getStandardSpecId(),spec.getSpecId());
                     }
                     specId = spec.getSpecId();
                 }else{
-                    specId = Starter.specMap.get(String.valueOf(p.getId()));
+                    specId = StartRunner.specMap.get(String.valueOf(p.getId()));
                 }
                 //保存规格值
                 int page = 0;
@@ -107,12 +108,12 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
             spec.setStandardSpecId(String.valueOf(p.getId()));
             spec.setLastmodify(new Date());
             spec = specificationRepository.save(spec);
-            if(!Starter.specMap.containsKey(spec.getStandardSpecId())){
-                Starter.specMap.put(spec.getStandardSpecId(),spec.getSpecId());
+            if(!StartRunner.specMap.containsKey(spec.getStandardSpecId())){
+                StartRunner.specMap.put(spec.getStandardSpecId(),spec.getSpecId());
             }
             specId = spec.getSpecId();
         }else{
-            specId = Starter.specMap.get(String.valueOf(p.getId()));
+            specId = StartRunner.specMap.get(String.valueOf(p.getId()));
         }
         //保存规格值
         int page = 0;

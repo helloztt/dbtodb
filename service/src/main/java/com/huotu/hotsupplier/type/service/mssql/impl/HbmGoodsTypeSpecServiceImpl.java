@@ -10,6 +10,7 @@ import com.huotu.hotsupplier.type.repository.mssql.HbmGoodsTypeSpecRepository;
 import com.huotu.hotsupplier.type.repository.mssql.HbmSpecValuesRepository;
 import com.huotu.hotsupplier.type.repository.mssql.HbmSpecificationRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmGoodsTypeSpecService;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,7 +42,7 @@ public class HbmGoodsTypeSpecServiceImpl implements HbmGoodsTypeSpecService {
             List<HbmGoodsTypeSpec> saveTypeSpec = new ArrayList<>();
             propertyValueList.forEach(propertyValue -> {
                 //从缓存中读取规格值ID
-                Integer specValueId = Starter.specValueMap.get(String.valueOf(propertyValue.getId()));
+                Integer specValueId = StartRunner.specValueMap.get(String.valueOf(propertyValue.getId()));
                 //如果缓存读取失败，则读取数据库
                 if(specValueId == null){
                     specValueId = specValuesRepository.findByStandardSpecValueId(String.valueOf(propertyValue.getId())).getId();

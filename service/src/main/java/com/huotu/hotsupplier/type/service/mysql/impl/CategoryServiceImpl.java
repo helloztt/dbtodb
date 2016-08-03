@@ -17,6 +17,7 @@ import com.huotu.hotsupplier.type.service.mssql.HbmTypeBrandService;
 import com.huotu.hotsupplier.type.service.mysql.CategoryService;
 import com.huotu.hotsupplier.type.util.Constant;
 import com.huotu.hotsupplier.type.worker.CategoryRunner;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -113,7 +114,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (salePropertyList != null && salePropertyList.size() > 0) {
             salePropertyList.forEach(property -> {
                 //从缓存中获取规格对应的ID
-                Integer specId = Starter.specMap.get(String.valueOf(property.getId()));
+                Integer specId = StartRunner.specMap.get(String.valueOf(property.getId()));
                 //若缓存读取失败，则从数据库中读取
                 if (specId == null) {
                     specId = specRepository.findByStandardSpecId(String.valueOf(property.getId())).getSpecId();

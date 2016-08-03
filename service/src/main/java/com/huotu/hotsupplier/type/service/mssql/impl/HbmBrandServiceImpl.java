@@ -6,6 +6,7 @@ import com.huotu.hotsupplier.type.entity.mysql.PropertyValue;
 import com.huotu.hotsupplier.type.repository.mssql.HbmBrandRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmBrandService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,7 +33,7 @@ public class HbmBrandServiceImpl implements HbmBrandService {
             List<HbmBrand> saveBrand = new ArrayList<>();
             brandList.forEach(b->{
 //                HbmBrand old = brandRepository.findByStandardBrandId(String.valueOf(b.getId()));
-                if(!Starter.brandMap.containsKey(String.valueOf(b.getId()))){
+                if(!StartRunner.brandMap.containsKey(String.valueOf(b.getId()))){
                     HbmBrand brand = new HbmBrand();
                     brand.setBrandName(b.getName());
                     brand.setCustomerId(-1);
@@ -61,8 +62,8 @@ public class HbmBrandServiceImpl implements HbmBrandService {
 
     private void saveBrands(List<HbmBrand> brandList){
         brandRepository.save(brandList).forEach(b->{
-            if(!Starter.brandMap.containsKey(b.getStandardBrandId())){
-                Starter.brandMap.put(b.getStandardBrandId(),b.getBrandId());
+            if(!StartRunner.brandMap.containsKey(b.getStandardBrandId())){
+                StartRunner.brandMap.put(b.getStandardBrandId(),b.getBrandId());
             }
         });
         try {
@@ -82,15 +83,15 @@ public class HbmBrandServiceImpl implements HbmBrandService {
         log.info("brand total page " + totalPage);
         if(firstBrandList != null && totalPage > 0){
             firstBrandList.getContent().forEach(b->{
-                if(!Starter.brandMap.containsKey(b.getStandardBrandId())){
-                    Starter.brandMap.put(b.getStandardBrandId(),b.getBrandId());
+                if(!StartRunner.brandMap.containsKey(b.getStandardBrandId())){
+                    StartRunner.brandMap.put(b.getStandardBrandId(),b.getBrandId());
                 }
             });
             for(page = 1;page<totalPage ; page ++){
                 Page<HbmBrand> brandList = brandRepository.findByCustomerId(-1,new PageRequest(page,Constant.READPAGESIZE));
                 brandList.getContent().forEach(b->{
-                    if(!Starter.brandMap.containsKey(b.getStandardBrandId())){
-                        Starter.brandMap.put(b.getStandardBrandId(),b.getBrandId());
+                    if(!StartRunner.brandMap.containsKey(b.getStandardBrandId())){
+                        StartRunner.brandMap.put(b.getStandardBrandId(),b.getBrandId());
                     }
                 });
                 log.info("get brand page" + page);

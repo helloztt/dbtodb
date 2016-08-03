@@ -8,6 +8,7 @@ import com.huotu.hotsupplier.type.repository.mssql.HbmBrandRepository;
 import com.huotu.hotsupplier.type.repository.mssql.HbmTypeBrandRepository;
 import com.huotu.hotsupplier.type.service.mssql.HbmTypeBrandService;
 import com.huotu.hotsupplier.type.util.Constant;
+import com.huotu.hotsupplier.type.worker.StartRunner;
 import com.huotu.hotsupplier.type.worker.Starter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,7 +38,7 @@ public class HbmTypeBrandServiceImpl implements HbmTypeBrandService {
             List<HbmTypeBrand> saveTypeBrand = new ArrayList<>();
             brandList.forEach(b -> {
                 //从缓存中读取brandId
-                Integer brandId = Starter.brandMap.get(String.valueOf(b.getId()));
+                Integer brandId = StartRunner.brandMap.get(String.valueOf(b.getId()));
                 //如果缓存读取失败，则从数据库中读取
                 if (brandId == null) {
                     brandId = brandRepository.findByStandardBrandId(String.valueOf(b.getId())).getBrandId();
