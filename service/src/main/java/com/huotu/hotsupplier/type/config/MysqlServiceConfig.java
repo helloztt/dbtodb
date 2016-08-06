@@ -29,7 +29,7 @@ public class MysqlServiceConfig {
         @Bean
         public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
                 ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-                threadPoolTaskScheduler.setPoolSize(20);
+                threadPoolTaskScheduler.setPoolSize(40);
                 //设置线程池中为守护线程
                 threadPoolTaskScheduler.setDaemon(true);
                 return threadPoolTaskScheduler;

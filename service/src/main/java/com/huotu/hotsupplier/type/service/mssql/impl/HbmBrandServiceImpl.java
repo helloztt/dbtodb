@@ -103,6 +103,6 @@ public class HbmBrandServiceImpl implements HbmBrandService {
 
     @Override
     public long getBrandCount() {
-        return brandRepository.count();
+        return brandRepository.countByCustomerId(-1);
     }
 }

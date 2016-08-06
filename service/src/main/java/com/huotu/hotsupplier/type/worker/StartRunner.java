@@ -104,6 +104,18 @@ public class StartRunner extends TimerTask {
         /*testRunner.setRun(false);*/
         long end = System.currentTimeMillis();
         log.info("dbtodb over , last " + (end - start) + "ms");
+        //计算标准brand num
+        log.info("brand standard num:" + brandService.getBrandCount());
+        //计算标准specification num
+        log.info("spec standard num:" + specService.getSpecCount());
+        //计算标准specValue num
+        log.info("spec value num:" + specValuesService.getSpecValueCount());
+        //计算标准type num
+        log.info("type num:" + typeService.getTypeCount());
+        //计算标准类目品牌关联表
+        log.info("type-brand num:" + typeBrandService.getTypeBrandCount());
+        //计算标准类目规格关联表
+        log.info("type-spec num:" + typeSpecService.getTypeSpecCount());
             /*}else{
                 //保存部分数据
                 for(int i = 1 ; i < args.length; i++){

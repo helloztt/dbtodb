@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface HbmGoodsTypeRepository extends JpaRepository<HbmGoodsType, Integer>, JpaSpecificationExecutor {
     HbmGoodsType findByStandardTypeId(String standardTypeId);
 
+    long countByCustomerId(int customerId);
 }

@@ -88,6 +88,6 @@ public class HbmSpecValuesServiceImpl implements HbmSpecValuesService {
 
     @Override
     public long getSpecValueCount() {
-        return specValuesRepository.count();
+        return specValuesRepository.countByCustomerId(-1);
     }
 }

@@ -65,6 +65,6 @@ public class HbmTypeBrandServiceImpl implements HbmTypeBrandService {
 
     @Override
     public long getTypeBrandCount() {
-        return typeBrandRepository.count();
+        return typeBrandRepository.countByCustomerId(-1);
     }
 }

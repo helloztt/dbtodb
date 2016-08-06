@@ -57,6 +57,6 @@ public class HbmGoodsTypeServiceImpl implements HbmGoodsTypeService {
 
     @Override
     public long getTypeCount() {
-        return typeRepository.count();
+        return typeRepository.countByCustomerId(-1);
     }
 }

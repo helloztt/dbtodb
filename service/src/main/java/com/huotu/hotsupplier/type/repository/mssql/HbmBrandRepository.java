@@ -13,4 +13,6 @@ public interface HbmBrandRepository extends JpaRepository<HbmBrand, Integer>, Jp
     HbmBrand findByStandardBrandId(String standardBrandId);
 
     Page<HbmBrand> findByCustomerId(int customerId,Pageable pageable);
+
+    long countByCustomerId(int customerId);
 }

@@ -23,4 +23,6 @@ public interface HbmSpecificationRepository extends JpaRepository<HbmSpecificati
     HbmSpecification findByStandardSpecId(String standardSpecId);
 
     Page<HbmSpecification> findByCustomerId(int customerId,Pageable pageable);
+
+    long countByCustomerId(int customerId);
 }

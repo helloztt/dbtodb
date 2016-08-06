@@ -131,6 +131,6 @@ public class HbmSpecificationServiceImpl implements HbmSpecificationService {
 
     @Override
     public long getSpecCount() {
-        return specificationRepository.count();
+        return specificationRepository.countByCustomerId(-1);
     }
 }
